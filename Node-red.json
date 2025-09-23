@@ -1,0 +1,91 @@
+[
+    {
+        "id": "mqtt-in",
+        "type": "mqtt in",
+        "z": "flow1",
+        "name": "Recebe dados da moto",
+        "topic": "moto/#",
+        "qos": "0",
+        "datatype": "auto",
+        "broker": "broker-mqtt",
+        "x": 200,
+        "y": 120,
+        "wires": [["debug", "db-out", "chart"]]
+    },
+    {
+        "id": "debug",
+        "type": "debug",
+        "z": "flow1",
+        "name": "Ver dados recebidos",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 480,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "db-out",
+        "type": "sqlite",
+        "z": "flow1",
+        "mydb": "db1",
+        "name": "Salvar no SQLite",
+        "sqlquery": "INSERT",
+        "output": "none",
+        "x": 500,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "chart",
+        "type": "ui_chart",
+        "z": "flow1",
+        "name": "Gráfico Telemetria",
+        "group": "group1",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "label": "Dados da Moto",
+        "chartType": "line",
+        "legend": "true",
+        "x": 500,
+        "y": 180,
+        "wires": [[], []]
+    },
+    {
+        "id": "broker-mqtt",
+        "type": "mqtt-broker",
+        "name": "HiveMQ Broker",
+        "broker": "broker.hivemq.com",
+        "port": "1883",
+        "clientid": "node-red-moto",
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true
+    },
+    {
+        "id": "db1",
+        "type": "sqlitedb",
+        "db": "/home/pi/iot_motos.db",
+        "mode": "RWC"
+    },
+    {
+        "id": "group1",
+        "type": "ui_group",
+        "name": "Moto",
+        "tab": "tab1",
+        "order": 1,
+        "disp": true,
+        "width": "6"
+    },
+    {
+        "id": "tab1",
+        "type": "ui_tab",
+        "name": "Dashboard Moto",
+        "icon": "dashboard"
+    }
+]
