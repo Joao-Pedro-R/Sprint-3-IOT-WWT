@@ -1,0 +1,51 @@
+{
+  "version": 1,
+  "author": "Anonymous maker",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "board-esp32-devkit-c-v4", "id": "esp", "top": 38.4, "left": 4.84, "attrs": {} },
+    {
+      "type": "chip-gps-neo6m",
+      "id": "chip1",
+      "top": 203.6,
+      "left": 178.82,
+      "rotate": 270,
+      "attrs": {}
+    },
+    { "type": "wokwi-hc-sr04", "id": "ultrasonic1", "top": -123.3, "left": 101.5, "attrs": {} },
+    {
+      "type": "wokwi-mpu6050",
+      "id": "imu1",
+      "top": -103.22,
+      "left": -132.32,
+      "rotate": 180,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-buzzer",
+      "id": "bz1",
+      "top": 211.2,
+      "left": -172.8,
+      "rotate": 180,
+      "attrs": { "volume": "0.1" }
+    }
+  ],
+  "connections": [
+    [ "esp:TX", "$serialMonitor:RX", "", [] ],
+    [ "esp:RX", "$serialMonitor:TX", "", [] ],
+    [ "esp:16", "chip1:RX", "orange", [ "h0" ] ],
+    [ "chip1:TX", "esp:17", "blue", [ "v0" ] ],
+    [ "ultrasonic1:TRIG", "esp:5", "orange", [ "v0" ] ],
+    [ "ultrasonic1:ECHO", "esp:18", "blue", [ "v0" ] ],
+    [ "imu1:SCL", "esp:22", "blue", [ "v38.4", "h239.92", "v57.6" ] ],
+    [ "imu1:SDA", "esp:21", "orange", [ "v28.8", "h239.92", "v96" ] ],
+    [ "bz1:2", "esp:19", "red", [ "v0" ] ],
+    [ "bz1:1", "esp:GND.1", "black", [ "v0" ] ],
+    [ "imu1:VCC", "esp:3V3", "red", [ "v0" ] ],
+    [ "imu1:GND", "esp:GND.1", "black", [ "v0" ] ],
+    [ "chip1:VCC", "esp:3V3", "red", [ "h-19.2", "v-249.6", "h-211.35" ] ],
+    [ "chip1:GND", "esp:GND.3", "black", [ "h38.4", "v-182.4" ] ],
+    [ "ultrasonic1:VCC", "esp:5V", "red", [ "v307.2", "h-163.35" ] ]
+  ],
+  "dependencies": {}
+}
