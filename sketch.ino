@@ -100,6 +100,8 @@ void setup() {
   pinMode(echoPin, INPUT);
   pinMode(buzzerPin, OUTPUT);
 
+  Wire.begin(21, 22);
+
   if (!mpu.begin()) {
     Serial.println("Erro ao inicializar o MPU6050!");
     while (1) delay(10);
