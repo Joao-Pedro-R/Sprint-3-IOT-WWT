@@ -6,8 +6,8 @@
 #include <TinyGPS++.h>
 #include <HardwareSerial.h>
 
-const char* ssid = "FIAP-IOT";        
-const char* password = "****";  
+const char* ssid = "Nome_wifi";        
+const char* password = "Senha_wifi";  
 const char* mqtt_server = "broker.hivemq.com"; 
 
 // Tópicos MQTT
@@ -34,6 +34,7 @@ const int buzzerPin = 19;
 long duration;
 float distance;
 
+/* Está em comentário, pois se fosse um esp 32 físico seria para utilizar esta parte do código!
 void setup_wifi() {
   delay(10);
 
@@ -55,6 +56,18 @@ void setup_wifi() {
   Serial.println("WiFi conectado");
   Serial.println("IP address: ");
   Serial.println(WiFi.localIP());
+}
+*/
+
+void setup_wifi() { //Está sendo usado desta forma pois os teste foram no site Wowki que só permite o wifi deles.
+  Serial.begin(9600);
+  Serial.print("Conectando-se ao Wi-Fi");
+  WiFi.begin("Wokwi-GUEST", "", 6);
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(100);
+    Serial.print(".");
+  }
+  Serial.println(" Conectado!");
 }
 
 void reconnect() {
