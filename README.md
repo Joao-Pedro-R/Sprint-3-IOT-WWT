@@ -40,6 +40,7 @@ graph TD;
     Dashboard["Dashboard Web"]
 
     ESP32 -->|Publica dados| MQTT
-    Python["Python Simulator"] -->|NO CASO DE TESTE COM SIMULADORES WEB: Publica dados| ESP32
-    MQTT --> NodeRED
-    NodeRED --> Dashboard
+    Python["Python Simulator"] -->|NO CASO DE TESTE COM SIMULADORES WEB: cria dados simulados| ESP32
+    MQTT -->|Manda os dados| NodeRED
+    NodeRED -->|Trata os dados e os dispõe em um display| Dashboard
+    NodeRED -->|Guarda os dados| Banco de dados
