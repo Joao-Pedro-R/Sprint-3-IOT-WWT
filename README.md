@@ -72,7 +72,8 @@ Receber os dados publicados pelo ESP32 no tópico leitura/qr via MQTT, exibir no
 - Os dados são exebidos em um display
 
 ### 📚 Bibliotecas
-#### ESP32
+
+#### 🤖 ESP32
 - PubSubClient: para MQTT
 
 - WiFi.h: para Wi-Fi
@@ -82,7 +83,8 @@ Receber os dados publicados pelo ESP32 no tópico leitura/qr via MQTT, exibir no
 - Adafruit MPU6050
 
 - Adafruit Unified Sensor
-#### Python
+
+#### 🐍 Python
 - paho.mqtt.client
   
 - time
