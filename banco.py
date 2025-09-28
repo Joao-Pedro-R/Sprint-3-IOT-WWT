@@ -2,12 +2,10 @@ import paho.mqtt.client as mqtt
 import sqlite3
 import json
 
-# Config MQTT
 BROKER = "broker.hivemq.com"
 PORT = 1883
 TOPICS = ["moto/gps", "moto/proximidade", "moto/movimento", "moto/alarme"]
 
-# Conexão com banco SQLite
 conn = sqlite3.connect("iot_motos.db")
 cursor = conn.cursor()
 
