@@ -34,6 +34,7 @@ O sistema detecta:
 ## 📡 Arquitetura
 ```mermaid
 graph TD;
+    Database["SQLite3"]
     ESP32["ESP32 + Sensores"]
     MQTT["Broker MQTT (HiveMQ)"]
     NodeRED["Node-RED"]
@@ -43,4 +44,4 @@ graph TD;
     Python["Python Simulator"] -->|NO CASO DE TESTE COM SIMULADORES WEB: cria dados simulados| ESP32
     MQTT -->|Manda os dados| NodeRED
     NodeRED -->|Trata os dados e os dispõe em um display| Dashboard
-    NodeRED -->|Guarda os dados| Banco de dados
+    NodeRED -->|Guarda os dados| Database
