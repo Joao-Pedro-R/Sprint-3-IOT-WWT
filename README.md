@@ -35,7 +35,8 @@ O sistema detecta:
   - Buzzer (atuador) → Para servir de alarme
 - **Protocolos**: MQTT (via [HiveMQ Broker](https://www.hivemq.com/public-mqtt-broker/))  
 - **Node-RED + Dashboard** → exibição dos dados e testes de casos de uso.  
-- **Python + Paho-MQTT** (opcional) → simulação de dados.  
+- **Python + Paho-MQTT** (opcional) → simulação de dados.
+- **Banco de dados(SQLite3)** → Armazenamento de dados.
 
 ---
 
