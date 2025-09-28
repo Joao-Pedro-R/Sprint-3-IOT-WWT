@@ -1,6 +1,15 @@
 # Sprint-3-IOT-WWT
 Link Wowki: https://wokwi.com/projects/442760478935109633
 
+## Link do projeto no wokwi: [https://wokwi.com/projects/432784932341371905](https://wokwi.com/projects/442760478935109633)
+
+## 👨‍💻 Integrantes do Grupo
+| Nome           | RM        |
+|----------------|-----------|
+| Daniel Akiyama | RM 558263 |
+| Danilo Correia | RM 557540 |
+| João Pedro R   | RM 558199 |
+
 # 🚀 IoT - Monitoramento de Motos em Pátio
 
 Este projeto demonstra um **sistema IoT de monitoramento de motos** utilizando sensores físicos (ou simulados), comunicação MQTT e um **dashboard no Node-RED** para visualização em tempo real.
