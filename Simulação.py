@@ -1,19 +1,18 @@
 //pip install paho-mqtt fazer no cmd
 
-import paho.mqtt.client as mqtt
+import paho.mqtt.client as mqtt # type: ignore
 import time
 import random
 import json
 
-# ===================== CONFIG MQTT =====================
-BROKER = "test.mosquitto.org"
+
+BROKER = "broker.hivemq.com"
 PORT = 1883
 TOPIC_GPS = "moto/gps"
 TOPIC_PROX = "moto/proximidade"
 TOPIC_ACCEL = "moto/movimento"
 TOPIC_ALARME = "moto/alarme"
 
-# ===================== CALLBACKS =====================
 def on_connect(client, userdata, flags, rc):
     print("Conectado ao broker MQTT:", BROKER)
     client.subscribe(TOPIC_ALARME)  # escuta comandos para o buzzer
@@ -25,7 +24,6 @@ def on_message(client, userdata, msg):
         else:
             print("✅ Buzzer DESLIGADO")
 
-# ===================== CONFIG CLIENT =====================
 client = mqtt.Client()
 client.on_connect = on_connect
 client.on_message = on_message
@@ -33,7 +31,6 @@ client.connect(BROKER, PORT, 60)
 
 client.loop_start()
 
-# ===================== LOOP DE SIMULAÇÃO =====================
 try:
     while True:
         # Simulação GPS
@@ -57,7 +54,6 @@ try:
         client.publish(TOPIC_ACCEL, json.dumps(accel_data))
         print("📈 Movimento:", accel_data)
 
-        # Se movimento suspeito -> aciona buzzer
         if accel_data["z"] > 15:
             client.publish(TOPIC_ALARME, "1")
         else:
@@ -70,4 +66,3 @@ except KeyboardInterrupt:
     print("Simulação encerrada.")
     client.loop_stop()
     client.disconnect()
-
