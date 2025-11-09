@@ -1,8 +1,8 @@
-# Sprint-3-IOT-WWT -> **Motracker**
+# Sprint-4-IOT-WWT -> **Motracker**
 
 ## Link do projeto no wokwi: [https://wokwi.com/projects/432784932341371905](https://wokwi.com/projects/442760478935109633)
 
-## Link do vídeo no Youtube: https://youtu.be/F0WRDmkd_g8
+## Link do vídeo no Youtube: 
 
 ## 👨‍💻 Integrantes do Grupo
 | Nome           | RM        |
@@ -24,7 +24,8 @@ O sistema detecta:
 - 📍 **Localização GPS** da moto.  
 - 📏 **Distância/proximidade** da vaga usando ultrassônico.  
 - 📈 **Movimento/posição** via acelerômetro.  
-- 🚨 **Alarme** sonoro (simulado com buzzer).  
+- 🚨 **Alarme** sonoro (simulado com buzzer).
+- 🗺️ **Posição** via um grid
 
 ---
 
@@ -39,6 +40,7 @@ O sistema detecta:
 - **Node-RED + Dashboard** → exibição dos dados e testes de casos de uso.  
 - **Python + Paho-MQTT** (opcional) → simulação de dados.
 - **Banco de dados(SQLite3)** → Armazenamento de dados.
+- **Código Java** → receber as informações dos sensores e aplicar ao resto do programa
 
 ---
 
@@ -50,12 +52,14 @@ graph TD;
     MQTT["Broker MQTT (HiveMQ)"]
     NodeRED["Node-RED"]
     Dashboard["Dashboard Web"]
+    Java["Back-end"]
 
     ESP32 -->|Publica dados| MQTT
     Python["Python Simulator"] -->|NO CASO DE TESTE COM SIMULADORES WEB: cria dados simulados| ESP32
     MQTT -->|Manda os dados| NodeRED
     NodeRED -->|Trata os dados e os dispõe em um display| Dashboard
     NodeRED -->|Guarda os dados| Database
+    MQTT -->|Transmite info| Java
 ```
 
 Objetivo do fluxo:
@@ -102,6 +106,8 @@ Receber os dados publicados pelo ESP32 no tópico leitura/qr via MQTT, exibir no
 - Node-RED instalado e em execução [(http://localhost:1880)](http://127.0.0.1:1880/)
 
 - Um broker MQTT acessível (broker.hivemq.com)
+
+- node-red-contrib-web-worldmap
 
 - Dashboard instalado via Manage Palette (node-red-dashboard)
 
