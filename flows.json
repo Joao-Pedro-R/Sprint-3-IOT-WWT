@@ -1,0 +1,564 @@
+[
+    {
+        "id": "f21a9ceb25b16cae",
+        "type": "tab",
+        "label": "Motos IoT",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "8716563b3ce58b7c",
+        "type": "mqtt in",
+        "z": "f21a9ceb25b16cae",
+        "name": "GPS",
+        "topic": "moto/gps",
+        "qos": "0",
+        "datatype": "auto",
+        "broker": "broker_hivemq",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 240,
+        "y": 240,
+        "wires": [
+            [
+                "69ddac0bf495eb74",
+                "5aefde1e89f12f4e",
+                "45570ba2e17319cf"
+            ]
+        ]
+    },
+    {
+        "id": "69ddac0bf495eb74",
+        "type": "json",
+        "z": "f21a9ceb25b16cae",
+        "name": "Parse GPS",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 440,
+        "y": 240,
+        "wires": [
+            [
+                "405c02989e482fc3",
+                "89ba791776429f62",
+                "00d50bba346286c5",
+                "1e146cfdcd98b6a6"
+            ]
+        ]
+    },
+    {
+        "id": "405c02989e482fc3",
+        "type": "function",
+        "z": "f21a9ceb25b16cae",
+        "name": "Format GPS text",
+        "func": "if(!msg.payload || typeof msg.payload.lat === 'undefined') return null;\nmsg.payload = `Lat: ${msg.payload.lat.toFixed(5)} | Lng: ${msg.payload.lng.toFixed(5)}`;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 660,
+        "y": 240,
+        "wires": [
+            [
+                "593a836d9787a726"
+            ]
+        ]
+    },
+    {
+        "id": "593a836d9787a726",
+        "type": "ui_text",
+        "z": "f21a9ceb25b16cae",
+        "group": "grp_dashboard",
+        "order": 1,
+        "width": 6,
+        "height": 1,
+        "name": "GPS text",
+        "label": "Localização",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 880,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "06182a087554abc6",
+        "type": "mqtt in",
+        "z": "f21a9ceb25b16cae",
+        "name": "Proximidade",
+        "topic": "moto/proximidade",
+        "qos": "0",
+        "datatype": "auto",
+        "broker": "broker_hivemq",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 230,
+        "y": 320,
+        "wires": [
+            [
+                "10fa7840908c5b34",
+                "1b43e327e3c451dc"
+            ]
+        ]
+    },
+    {
+        "id": "10fa7840908c5b34",
+        "type": "function",
+        "z": "f21a9ceb25b16cae",
+        "name": "String → Number",
+        "func": "msg.payload = parseFloat(msg.payload);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 450,
+        "y": 320,
+        "wires": [
+            [
+                "ad21b2c829bf1488"
+            ]
+        ]
+    },
+    {
+        "id": "ad21b2c829bf1488",
+        "type": "ui_gauge",
+        "z": "f21a9ceb25b16cae",
+        "name": "Distância",
+        "group": "grp_dashboard",
+        "order": 2,
+        "width": 6,
+        "height": 2,
+        "gtype": "gage",
+        "title": "Distância (cm)",
+        "label": "cm",
+        "format": "{{value}}",
+        "min": 0,
+        "max": 400,
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "className": "",
+        "x": 690,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "9d8fbf6c18492e42",
+        "type": "mqtt in",
+        "z": "f21a9ceb25b16cae",
+        "name": "Movimento",
+        "topic": "moto/movimento",
+        "qos": "0",
+        "datatype": "auto",
+        "broker": "broker_hivemq",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 240,
+        "y": 400,
+        "wires": [
+            [
+                "b1cd314c6ec07448",
+                "cbc924950bf4d1db"
+            ]
+        ]
+    },
+    {
+        "id": "b1cd314c6ec07448",
+        "type": "json",
+        "z": "f21a9ceb25b16cae",
+        "name": "Parse Movimento",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 440,
+        "y": 400,
+        "wires": [
+            [
+                "dd0bf4cf362bf0cf"
+            ]
+        ]
+    },
+    {
+        "id": "dd0bf4cf362bf0cf",
+        "type": "function",
+        "z": "f21a9ceb25b16cae",
+        "name": "Extrair X,Y,Z",
+        "func": "return [\n  { payload: msg.payload.x, topic: 'Eixo X' },\n  { payload: msg.payload.y, topic: 'Eixo Y' },\n  { payload: msg.payload.z, topic: 'Eixo Z' }\n];",
+        "outputs": 3,
+        "noerr": 0,
+        "x": 660,
+        "y": 400,
+        "wires": [
+            [
+                "abe098df112256ef"
+            ],
+            [
+                "abe098df112256ef"
+            ],
+            [
+                "abe098df112256ef"
+            ]
+        ]
+    },
+    {
+        "id": "abe098df112256ef",
+        "type": "ui_chart",
+        "z": "f21a9ceb25b16cae",
+        "name": "Accel XYZ",
+        "group": "grp_dashboard",
+        "order": 3,
+        "width": 12,
+        "height": 4,
+        "label": "Acelerômetro (XYZ)",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "Esperando dados...",
+        "dot": false,
+        "ymin": "-5",
+        "ymax": "30",
+        "removeOlder": "120",
+        "removeOlderUnit": "60",
+        "cutout": 0,
+        "useOneColor": false,
+        "colors": [
+            "#1f77b4",
+            "#ff7f0e",
+            "#2ca02c"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 900,
+        "y": 400,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "2e3d53c460b98ab5",
+        "type": "mqtt in",
+        "z": "f21a9ceb25b16cae",
+        "name": "Alarme",
+        "topic": "moto/alarme",
+        "qos": "0",
+        "datatype": "auto",
+        "broker": "broker_hivemq",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 240,
+        "y": 480,
+        "wires": [
+            [
+                "e9276a08f1ec9268",
+                "1c2f7aa7463a8fc8"
+            ]
+        ]
+    },
+    {
+        "id": "e9276a08f1ec9268",
+        "type": "function",
+        "z": "f21a9ceb25b16cae",
+        "name": "Alarm → Texto",
+        "func": "const v = (typeof msg.payload === 'string') ? msg.payload.trim() : String(msg.payload);\nif(v === '1') msg.payload = '🚨 ALARME ATIVADO!'; else msg.payload = '✅ Seguro';\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 460,
+        "y": 480,
+        "wires": [
+            [
+                "e0e9281cf0e8e4e9"
+            ]
+        ]
+    },
+    {
+        "id": "e0e9281cf0e8e4e9",
+        "type": "ui_text",
+        "z": "f21a9ceb25b16cae",
+        "group": "grp_dashboard",
+        "order": 4,
+        "width": 12,
+        "height": 1,
+        "name": "Status Alarme",
+        "label": "Alarme",
+        "format": "{{msg.payload}}",
+        "layout": "row-center",
+        "className": "",
+        "x": 680,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "5aefde1e89f12f4e",
+        "type": "function",
+        "z": "f21a9ceb25b16cae",
+        "name": "DB Insert GPS",
+        "func": "msg.topic = \"INSERT INTO dados_moto (tipo, valor) VALUES ('gps', '\" + JSON.stringify(msg.payload) + \"')\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 640,
+        "y": 280,
+        "wires": [
+            [
+                "53ac41a8e896a20c"
+            ]
+        ]
+    },
+    {
+        "id": "1b43e327e3c451dc",
+        "type": "function",
+        "z": "f21a9ceb25b16cae",
+        "name": "DB Insert Prox",
+        "func": "msg.topic = \"INSERT INTO dados_moto (tipo, valor) VALUES ('proximidade', '\" + msg.payload + \"')\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 640,
+        "y": 340,
+        "wires": [
+            [
+                "53ac41a8e896a20c"
+            ]
+        ]
+    },
+    {
+        "id": "cbc924950bf4d1db",
+        "type": "function",
+        "z": "f21a9ceb25b16cae",
+        "name": "DB Insert Mov",
+        "func": "msg.topic = \"INSERT INTO dados_moto (tipo, valor) VALUES ('movimento', '\" + JSON.stringify(msg.payload) + \"')\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 640,
+        "y": 400,
+        "wires": [
+            [
+                "53ac41a8e896a20c"
+            ]
+        ]
+    },
+    {
+        "id": "1c2f7aa7463a8fc8",
+        "type": "function",
+        "z": "f21a9ceb25b16cae",
+        "name": "DB Insert Alarm",
+        "func": "msg.topic = \"INSERT INTO dados_moto (tipo, valor) VALUES ('alarme', '\" + msg.payload + \"')\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 640,
+        "y": 480,
+        "wires": [
+            [
+                "53ac41a8e896a20c"
+            ]
+        ]
+    },
+    {
+        "id": "53ac41a8e896a20c",
+        "type": "sqlite",
+        "z": "f21a9ceb25b16cae",
+        "mydb": "motosdb",
+        "sqlquery": "msg.topic",
+        "sql": "",
+        "name": "SQLite DB",
+        "x": 900,
+        "y": 340,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "45570ba2e17319cf",
+        "type": "change",
+        "z": "f21a9ceb25b16cae",
+        "name": "Trigger → Grid (encaminha payload GPS)",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 540,
+        "y": 140,
+        "wires": [
+            [
+                "f7ee549eb8d7c740"
+            ]
+        ]
+    },
+    {
+        "id": "f7ee549eb8d7c740",
+        "type": "function",
+        "z": "f21a9ceb25b16cae",
+        "name": "Prepara posição para grid (simulado)",
+        "func": "// converte lat/lng para um payload simples usado pelo grid (mantemos lat/lng)\nif(!msg.payload || typeof msg.payload.lat === 'undefined') return null;\n// garanto que venham números\nmsg.payload = { lat: Number(msg.payload.lat), lng: Number(msg.payload.lng) };\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 890,
+        "y": 140,
+        "wires": [
+            [
+                "1e146cfdcd98b6a6",
+                "00d50bba346286c5"
+            ]
+        ]
+    },
+    {
+        "id": "1e146cfdcd98b6a6",
+        "type": "ui_template",
+        "z": "f21a9ceb25b16cae",
+        "group": "grp_dashboard",
+        "name": "Grid Sim: entrada (oculto)",
+        "order": 99,
+        "width": 0,
+        "height": 0,
+        "format": "<!-- template proxy: envia msg.payload para o grid visível -->\n<script>\n(function(scope){\n  scope.$watch('msg', function(m){\n    if(!m) return;\n    // reencaminha para o template real via evento\n    const event = new CustomEvent('nodeRedGridPayload',{detail:m.payload});\n    window.dispatchEvent(event);\n  });\n})(scope);\n</script>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "x": 1190,
+        "y": 140,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "89ba791776429f62",
+        "type": "function",
+        "z": "f21a9ceb25b16cae",
+        "name": "GPS → Worldmap marker",
+        "func": "if(!msg.payload || typeof msg.payload.lat === 'undefined') return null;\nmsg.payload = {\n    name: 'Moto-1',\n    lat: msg.payload.lat,\n    lon: msg.payload.lng,\n    icon: 'motorcycle',\n    layer: 'Motos',\n    popup: 'Moto-1 em ' + new Date().toLocaleTimeString()\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 660,
+        "y": 540,
+        "wires": [
+            [
+                "e74968c58fd111e4"
+            ]
+        ]
+    },
+    {
+        "id": "e74968c58fd111e4",
+        "type": "worldmap",
+        "z": "f21a9ceb25b16cae",
+        "name": "Mapa de Localização",
+        "lat": "-23.56",
+        "lon": "-46.65",
+        "zoom": "16",
+        "layer": "OSM",
+        "cluster": "",
+        "maxage": "",
+        "usermenu": "show",
+        "layers": "show",
+        "panit": "false",
+        "path": "/worldmap",
+        "overlist": "true",
+        "maplist": "false",
+        "mapname": "Moto",
+        "x": 900,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "00d50bba346286c5",
+        "type": "ui_template",
+        "z": "f21a9ceb25b16cae",
+        "group": "grp_dashboard",
+        "name": "Grid de Localização",
+        "order": 5,
+        "width": 12,
+        "height": 8,
+        "format": "<style>\n#gridWrapper {\n  display: grid;\n  grid-template-columns: repeat(10, 1fr);\n  grid-template-rows: repeat(10, 1fr);\n  width: 100%;\n  aspect-ratio: 1/1;\n  border: 2px solid #333;\n}\n.cell {\n  border: 1px solid #aaa;\n  background: #f2f2f2;\n  position: relative;\n}\n.cell.moto::after {\n  content: '\\1F3CD'; /* emoji moto */\n  position: absolute;\n  inset: 0;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  font-size: 1.5em;\n}\n</style>\n\n<div id=\"gridWrapper\"></div>\n\n<script>\n(function(){\n  const grid = document.getElementById('gridWrapper');\n  for(let i=0;i<100;i++){\n    const cell = document.createElement('div');\n    cell.className = 'cell';\n    grid.appendChild(cell);\n  }\n\n  function updateGrid(lat, lng){\n    const idx = Math.floor(Math.random()*100); // simulação\n    document.querySelectorAll('.cell').forEach(c=>c.classList.remove('moto'));\n    grid.children[idx].classList.add('moto');\n  }\n\n  window.addEventListener('nodeRedGridPayload', e => {\n    const {lat, lng} = e.detail;\n    updateGrid(lat,lng);\n  });\n})();\n</script>",
+        "storeOutMessages": false,
+        "fwdInMessages": false,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 1180,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "broker_hivemq",
+        "type": "mqtt-broker",
+        "name": "HiveMQ Broker",
+        "broker": "broker.hivemq.com",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": ""
+    },
+    {
+        "id": "grp_dashboard",
+        "type": "ui_group",
+        "name": "Monitoramento",
+        "tab": "tab_dashboard",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "motosdb",
+        "type": "sqlitedb",
+        "db": "./data/motos.db",
+        "mode": "RWC"
+    },
+    {
+        "id": "tab_dashboard",
+        "type": "ui_tab",
+        "name": "Motos IoT",
+        "icon": "dashboard",
+        "order": 1,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "03099c4eb30d41ce",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "node-red-dashboard": "3.6.6",
+            "node-red-node-sqlite": "1.1.1",
+            "node-red-contrib-web-worldmap": "5.5.3"
+        }
+    }
+]
