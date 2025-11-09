@@ -2,7 +2,7 @@
 
 ## Link do projeto no wokwi: [https://wokwi.com/projects/432784932341371905](https://wokwi.com/projects/442760478935109633)
 
-## Link do vídeo no Youtube: 
+## Link do vídeo no Youtube: https://youtu.be/aOhMKaobZvE
 
 ## 👨‍💻 Integrantes do Grupo
 | Nome           | RM        |
