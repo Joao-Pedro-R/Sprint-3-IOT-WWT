@@ -101,6 +101,14 @@ Receber os dados publicados pelo ESP32 no tópico leitura/qr via MQTT, exibir no
   
 - sqlite3
 
+#### ☕ JAVA
+
+- import org.eclipse.paho.client.mqttv3
+  
+- import com.google.gson.Gson
+  
+- import java.util.Random
+
 ### 🟥 NODE-RED
 #### 🧰 Pré-requisitos
 - Node-RED instalado e em execução [(http://localhost:1880)](http://127.0.0.1:1880/)
